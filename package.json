@@ -21,7 +21,8 @@
   "dependencies": {
     "express": "^4.17.1",
     "mongoose": "^5.12.1",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.1",
+    "socket.io": "^4.0.0"
   },
   "devDependencies": {
     "concurrently": "^6.0.0",

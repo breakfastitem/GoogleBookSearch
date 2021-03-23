@@ -3,7 +3,7 @@ import BookResult from "../../components/BookResult/bookResult";
 import "./styles.css";
 import API from '../../util/API'
 
-function Search() {
+function Search({socket}) {
 
     const [value, setValue] = useState("");
     const [bookList, setBookList] = useState([]);
@@ -21,7 +21,7 @@ function Search() {
             });
     };
 
-    let booksJSX = bookList.map(book => (<BookResult key={book.infoLink} isSearch={true} bookInfo={book} />));
+    let booksJSX = bookList.map(book => (<BookResult socket={socket} key={book.infoLink} isSearch={true} bookInfo={book} />));
 
     return (
         <div className="row">

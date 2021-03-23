@@ -3,7 +3,7 @@ import BookResult from "../../components/BookResult/bookResult";
 import "./styles.css";
 import API from '../../util/API';
 
-function Saved() {
+function Saved({socket}) {
 
     const [bookList, setBookList] = useState([]);
 
@@ -15,7 +15,7 @@ function Saved() {
             });
     }, []);
 
-    let booksJSX = bookList.map(book => (<BookResult setBookList={setBookList} key={book._id} isSearch={false} bookInfo={book} />));
+    let booksJSX = bookList.map(book => (<BookResult socket={socket} setBookList={setBookList} key={book._id} isSearch={false} bookInfo={book} />));
 
 
 

@@ -2,7 +2,8 @@ import React from "react";
 import "./styles.css";
 import API from "../../util/API"
 
-function BookResult({ bookInfo, isSearch, setBookList }) {
+function BookResult({ bookInfo, isSearch, setBookList, socket }) {
+
     let book = {};
 
     let authorString = "No Listed Author";
@@ -42,20 +43,26 @@ function BookResult({ bookInfo, isSearch, setBookList }) {
 
 
         selector = "Save";
-        onClick = function () {
+        onClick = function (event) {
+            event.preventDefault();
             API.saveBook(book)
+                .then(() => {
+                    socket.emit("saved", book.title);
+                })
                 .catch(err => {
                     console.log(err)
                 });
         }
 
     } else {
-        book=bookInfo;
+        book = bookInfo;
 
         selector = "Delete";
-        onClick = function () {
+        onClick = function (event) {
+            event.preventDefault();
             API.deleteBook(bookInfo._id)
                 .then((data) => {
+                    socket.emit("removed", book.title);
                     API.getBooks()
                         .then(data => setBookList(data.data));
                 })
