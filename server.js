@@ -22,6 +22,7 @@ mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.PASSWORD}@c
 
 //routes
 require('./routes/api-routes')(app,db);
+require('./routes/google-books-routes')(app);
 
 
 app.listen(PORT, () => {

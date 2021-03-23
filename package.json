@@ -20,7 +20,8 @@
   "homepage": "https://github.com/breakfastitem/GoogleBookSearch#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "mongoose": "^5.12.1"
+    "mongoose": "^5.12.1",
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {
     "concurrently": "^6.0.0",
