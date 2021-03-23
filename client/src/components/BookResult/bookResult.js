@@ -2,7 +2,7 @@ import React from "react";
 import "./styles.css";
 import API from "../../util/API"
 
-function BookResult({ bookInfo, isSearch }) {
+function BookResult({ bookInfo, isSearch, setBookList }) {
     let book = {};
 
     let authorString = "No Listed Author";
@@ -10,32 +10,37 @@ function BookResult({ bookInfo, isSearch }) {
     let onClick;
     let selector;
 
-    let redirect;
-
-
-
-    if (bookInfo["title"]) {
-        book["title"] = bookInfo["title"];
-    }
-    if (bookInfo["description"]) {
-        book["description"] = bookInfo["description"];
-    }
-    if (bookInfo["authors"]) {
-        book["authors"] = bookInfo["authors"];
-
-        authorString = book.authors[0];
-        for (let i = 1; i < book.authors.length; i++) {
-            authorString = authorString + ", " + book.authors[i];
-        }
-    }
-    if (bookInfo.imageLinks) {
-        book.image = bookInfo.imageLinks.smallThumbnail;
-    }
-    if (bookInfo["infoLink"]) {
-        book["link"] = bookInfo["infoLink"];
-    }
-
     if (isSearch) {
+
+
+        if (bookInfo["title"]) {
+            book["title"] = bookInfo["title"];
+        }
+
+        if (bookInfo["description"]) {
+            book["description"] = bookInfo["description"];
+        }
+
+        if (bookInfo["authors"]) {
+            book["authors"] = bookInfo["authors"];
+
+            authorString = book.authors[0];
+            for (let i = 1; i < book.authors.length; i++) {
+                authorString = authorString + ", " + book.authors[i];
+            }
+        }
+
+        if (bookInfo.imageLinks) {
+            book.image = bookInfo.imageLinks.smallThumbnail;
+        }
+
+        if (bookInfo["infoLink"]) {
+            book["link"] = bookInfo["infoLink"];
+        }
+
+
+
+
         selector = "Save";
         onClick = function () {
             API.saveBook(book)
@@ -45,13 +50,19 @@ function BookResult({ bookInfo, isSearch }) {
         }
 
     } else {
-        // selector="Delete";
-        // onClick=function(){
-        //     API.saveBook(book)
-        //     .catch(err =>{
-        //         console.log(err)
-        //     });
-        // }
+        book=bookInfo;
+
+        selector = "Delete";
+        onClick = function () {
+            API.deleteBook(bookInfo._id)
+                .then((data) => {
+                    API.getBooks()
+                        .then(data => setBookList(data.data));
+                })
+                .catch(err => {
+                    console.log(err)
+                });
+        }
     }
 
     return (
