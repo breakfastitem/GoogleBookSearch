@@ -3,7 +3,7 @@ module.exports = function (app, db) {
     //gets saved books from api
     app.get("/api/books", (req, res) => {
         db.Book.find({}, (err, data) => {
-            if (err) throw err;
+            if (err) console.error(err);
 
             res.json(data);
         });
@@ -14,7 +14,7 @@ module.exports = function (app, db) {
         let bookObj = new db.Book(body);
 
         db.Book.create(bookObj, (err, book) => {
-            if (err) throw err;
+            if (err) console.error(err);
 
             res.json(book);
         });

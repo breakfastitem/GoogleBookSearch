@@ -1,11 +1,83 @@
 import React from "react";
 import "./styles.css";
+import API from "../../util/API"
 
-function BookResult() {
+function BookResult({ bookInfo, isSearch }) {
+    let book = {};
+
+    let authorString = "No Listed Author";
+
+    let onClick;
+    let selector;
+
+    let redirect;
+
+
+
+    if (bookInfo["title"]) {
+        book["title"] = bookInfo["title"];
+    }
+    if (bookInfo["description"]) {
+        book["description"] = bookInfo["description"];
+    }
+    if (bookInfo["authors"]) {
+        book["authors"] = bookInfo["authors"];
+
+        authorString = book.authors[0];
+        for (let i = 1; i < book.authors.length; i++) {
+            authorString = authorString + ", " + book.authors[i];
+        }
+    }
+    if (bookInfo.imageLinks) {
+        book.image = bookInfo.imageLinks.smallThumbnail;
+    }
+    if (bookInfo["infoLink"]) {
+        book["link"] = bookInfo["infoLink"];
+    }
+
+    if (isSearch) {
+        selector = "Save";
+        onClick = function () {
+            API.saveBook(book)
+                .catch(err => {
+                    console.log(err)
+                });
+        }
+
+    } else {
+        // selector="Delete";
+        // onClick=function(){
+        //     API.saveBook(book)
+        //     .catch(err =>{
+        //         console.log(err)
+        //     });
+        // }
+    }
+
     return (
         <div className="row">
             <div className="col-12">
-                <p>Book Result</p>
+                <div className="row">
+                    <div className="col-10">
+                        <p>{book.title || "NO TITLE"}</p>
+                        <p>Written By: {authorString}</p>
+                    </div>
+                    <div className="col-2">
+                        <form action={book.link}>
+                            <button type="submit">View</button>
+                        </form>
+
+                        <button onClick={onClick}>{selector}</button>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-3">
+                        <img alt="book cover" src={book.image} />
+                    </div>
+                    <div className="col-9">
+                        <p>{book.description || "NO DESCRIPTION"}</p>
+                    </div>
+                </div>
             </div>
         </div>);
 }

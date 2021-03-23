@@ -5,7 +5,6 @@ import API from '../../util/API'
 
 function Search() {
 
-
     const [value, setValue] = useState("");
     const [bookList, setBookList] = useState([]);
 
@@ -14,12 +13,15 @@ function Search() {
 
         API.searchBooks(value)
             .then((data) => {
-                console.log(data);
+                console.log(data.data.items);
+                setBookList(data.data.items.map(item => item.volumeInfo));
             })
             .catch(err => {
                 console.log(err);
             });
     };
+
+    let booksJSX = bookList.map(book => (<BookResult key={book.infoLink} isSearch={true} bookInfo={book} />));
 
     return (
         <div className="row">
@@ -32,7 +34,7 @@ function Search() {
                     <button type="submit">Search</button>
                 </form>
 
-                <BookResult />
+                {booksJSX}
             </div>
         </div>
     );
