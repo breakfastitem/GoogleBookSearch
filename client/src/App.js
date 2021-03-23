@@ -6,12 +6,13 @@ import Header from './components/Header/header';
 import TitleCard from './components/TitleCard/titleCard';
 
 function App() {
+
   return (
 
     <div className="container">
       <BrowserRouter>
         <Header />
-        <TitleCard/>
+        <TitleCard />
         <Switch>
           <Route path="/" exact component={() => <Saved />} />
           <Route path="/saved" exact component={() => <Saved />} />
