@@ -1,5 +1,8 @@
 const fetch = require("node-fetch");
-require('dotenv').config();
+
+if (process.env.NODE_ENV === 'development') {
+    require('dotenv').config();
+}
 
 module.exports = function (app) {
     app.get("/api/search/:title", (req, res) => {

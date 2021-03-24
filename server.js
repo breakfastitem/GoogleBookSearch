@@ -1,6 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
-require('dotenv').config();
+
+if(process.env.NODE_ENV === 'development'){
+    require('dotenv').config();
+}
+
 
 const app = express();
 const server = require('http').createServer(app);
