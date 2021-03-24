@@ -33,9 +33,7 @@ const PORT = process.env.PORT || 8080;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('client/build'));
-}
+app.use(express.static('client/build'));
 
 //Database
 const db = require("./models");
