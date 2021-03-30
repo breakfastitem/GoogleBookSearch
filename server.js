@@ -1,6 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
+if (process.env.NODE_ENV !== "production") {
+    require("dotenv").config();
+}
 
 
 const app = express();
@@ -24,7 +27,11 @@ io.on("connection", (socket) => {
     });
 });
 
-const PORT = process.env.PORT || 8080;
+let PORT = process.env.PORT;
+
+if (process.env.NODE_ENV !== "production") {
+    PORT = 8003;
+}
 
 //MiddleWare
 app.use(express.urlencoded({ extended: true }));
